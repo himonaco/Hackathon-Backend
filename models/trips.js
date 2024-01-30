@@ -7,6 +7,7 @@ const tripsSchema = mongoose.Schema({
     price: Number,
 })
 
+
 const Trip = mongoose.model('trips', tripsSchema)
 
 module.exports = Trip
