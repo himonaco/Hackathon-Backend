@@ -1,14 +1,25 @@
 const express = require('express');
 const router = express.Router();
+const Trip = require('../models/trips');
 
-router.get('/:departure/:arrival', async (req, res) => {
-  try {
-    const { departure, arrival } = req.params;
-    const trips = await Trip.find({ departure, arrival });
-    res.json(trips);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+router.post('/', (req, res) => {
+  const { departure, arrival, date } = req.body;
+
+  if (!departure || !arrival || !date) {
+    return res.status(400).json({ error: 'Please provide values for all fields.' });
   }
+  const trips = Trip.find({
+    departure,
+    arrival,
+    date,
+  });
+
+  res.json({ trips });
 });
+
+
+
+
+
 
 module.exports = router;

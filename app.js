@@ -7,7 +7,8 @@ var cookieParser = require("cookie-parser")
 var logger = require("morgan")
 
 var indexRouter = require("./routes/index")
-var tripsRouter = require("./routes/trips") // Ajouter si vous voulez créer un nouveau fichier de route
+var tripsRouter = require("./routes/trips")
+var cartRouter = require("./routes/cart") // Ajouter si vous voulez créer un nouveau fichier de route
 
 var app = express()
 
@@ -42,6 +43,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, "public")))
 
 app.use("/", indexRouter)
-app.use("/trips", tripsRouter) // Ajouter si vous voulez créer un nouveau fichier de route
+app.use("/trips", tripsRouter)
+app.use("/cart", cartRouter) // Ajouter si vous voulez créer un nouveau fichier de route
 
 module.exports = app
