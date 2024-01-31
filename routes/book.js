@@ -7,47 +7,32 @@ const moment = require('moment');
 
 router.post('/', (req, res) => {
     Cart.find().then(data => {
-        if (data.length <= 1) {
-            const newBooking = new Book({
-                departure: data.departure,
-                arrival: data.arrival,
-                date: data.date,
-                price: data.price
-            })
-            newBooking.save().then(data => {
-                res.json({ result: true, booking: data })
-            })
+        for (let i = 0; i < data.length; i++) {
+            const newBooking = new Book({ trip: data[i].trip, isActive: true })
+            newBooking.save().then(() => {
+                Cart.deleteOne({ trip: data[i].trip })
 
-        } else {
-            for (let i = 0; i < data.length; i++) {
-                const newBooking = new Book({
-                    departure: data[i].departure,
-                    arrival: data[i].arrival,
-                    date: data[i].date,
-                    price: data[i].price
+                Book.find().populate("trip").then(data => {
+                    res.json({ result: true, bookings: data })
                 })
-                newBooking.save().then(data => {
-                    let bookArray = []
-                    bookArray.push(data)
-                })
-            } res.json({ result: true })
+            })
         }
     })
 })
 
 
-
-
 router.get('/', (req, res) => {
-    Book.find().then(data => {
+    Book.find().populate('trip').then(data => {
         if (!data) {
             res.json({ result: false })
         } else {
-            res.json({ result: true, bookings: data })
+            res.json({ result: true, booking: data })
         }
     })
 }
 )
+
+
 
 
 module.exports = router;

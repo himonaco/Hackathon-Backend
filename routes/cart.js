@@ -23,8 +23,8 @@ router.post('/', async (req, res) => {
 
 
 router.get('/', (req, res) => {
-    Cart.find().then(data => {
-        if (!data) {
+    Cart.find().populate("trip").then(data => {
+        if (!data[0]) {
             res.json({ result: false })
         } else {
             res.json({ result: true, cart: data })
