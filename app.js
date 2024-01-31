@@ -8,7 +8,8 @@ var logger = require("morgan")
 
 var indexRouter = require("./routes/index")
 var tripsRouter = require("./routes/trips")
-var cartRouter = require("./routes/cart") // Ajouter si vous voulez créer un nouveau fichier de route
+var cartRouter = require("./routes/cart")
+var bookRouter = require("./routes/book")
 
 var app = express()
 
@@ -44,6 +45,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 app.use("/", indexRouter)
 app.use("/trips", tripsRouter)
-app.use("/cart", cartRouter) // Ajouter si vous voulez créer un nouveau fichier de route
+app.use("/cart", cartRouter)
+app.use("/book", bookRouter)
 
 module.exports = app
